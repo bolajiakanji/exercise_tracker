@@ -1,12 +1,10 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const cors = require('cors');
+const express = require("express");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const cors = require("cors");
 
-
-
-const userController = require('./controllers/user');
-const exerciseController = require('./controllers/exercise');
+const userController = require("./controllers/user");
+const exerciseController = require("./controllers/exercise");
 
 const app = express();
 const port = process.env.NODE_env || 3000;
@@ -15,76 +13,67 @@ mongoose
   .then(() => console.log("connected to mangodb"))
   .catch((err) => console.error("failed to connect to mangodb", err));
 
-
 app.use(cors());
-app.use(express.static('public'));
+app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: false }));
 
-
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/views/index.html');
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/views/index.html");
 });
 
-app.post('/api/users', (req, res) => {
-  const username = req.body.username;
-  userController
-    .createAndSaveUser(username)
-    .then((result) => {
-      return res.json(result);
-    })
-    .catch((err) => {
+app.post("/api/users", async(req, res) => {
+    try {
+        const username = req.body.username;
+     const result=await   userController
+            .createUser(username)
+            
+                return res.json(result);
+            
+    }
+    catch (err)  {
       console.log(err);
-    });
+    };
 });
 
-app.get('/api/users', (req, res) => {
-  userController
-    .findAllUsers()
-    .then((result) => {
-      return res.json(result);
-    })
-    .catch((err) => {
+app.get("/api/users", async (req, res) => {
+    try {
+     const result =  await userController
+            .findAllUsers()
+            
+                return res.json(result);
+            
+    }
+    catch (err)  {
       console.log(err);
-    });
+    };
 });
 
-app.post('/api/users/:_id/exercises', (req, res) => {
-  const _id = req.params._id;
-  const { description, duration, date } = req.body;
-
-  const formattedDate = !date ? new Date() : new Date(date);
-  const data = { _id, description, duration, date: formattedDate };
-
-  exerciseController
-    .createAndSaveExercise(data)
-    .then((result) => {
-      return res.json(result);
-    })
-    .catch((err) => {
+app.post("/api/users/:_id/exercises", async(req, res) => {
+  
+    try {
+        const result = await exerciseController
+            .createExercise(data)
+    
+        return res.json(result);
+    }
+    catch(err)  {
       console.log(err);
-    });
+    };
 });
 
-app.get('/api/users/:_id/logs', (req, res) => {
+app.get("/api/users/:_id/logs",async (req, res) => {
   const userId = req.params._id;
-  let { from, to, limit } = req.query;
-
-  if (to) to = new Date(to);
-  if (from) from = new Date(from);
-  if (limit) limit = parseInt(limit);
-
-  const queryParams = { from, to, limit };
-
-  exerciseController
-    .retrieveExercisesLog(userId, queryParams)
-    .then((result) => {
+try {
+  const result = await exerciseController
+    .getAllExercises(userId, req.query)
+    
       return res.json(result);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+    }
+    catch (err)  {
+      console.log(err)
+    }
 });
 
 const listener = app.listen(process.env.PORT || 3000, () => {
-  console.log('Your app is listening on port ' + listener.address().port);
+  console.log("Your app is listening on port " + listener.address().port);
 });
