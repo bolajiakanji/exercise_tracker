@@ -1,8 +1,8 @@
-require("mongoose");
+const mongoose = require("mongoose");
 
-const exerciseSchema = new mongoose.schema({
+const exerciseSchema = new mongoose.Schema({
   userId: {
-    type: mongoose.Shema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
   username: {

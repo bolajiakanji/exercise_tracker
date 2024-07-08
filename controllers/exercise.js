@@ -1,4 +1,4 @@
-const User = require("../model/user");
+const User = require("../models/user");
 const Exercise = require("../models/exercise");
 const getdatequery = require('../utils/dateQuery')
 
@@ -8,14 +8,14 @@ exports.createExercise = async (newExercise) => {
   
     User.findById(userId);
       const exercise = new Exercise({ userId, username, description, duration, date });
-      const savedExercise = exercise.save()
-    ({ username, description, duration, date, userId }) = savedExercise
+      const savedExercise = await exercise.save()
+   const { s_username, s_description, s_duration, s_date, s_userId } = savedExercise
       return {
-          username,
-          description,
-          duration,
-          date,
-          _id: userId,
+        username: s_username,
+          description: s_description,
+          duration: s_duration,
+          date: s_date,
+          _id: s_userId,
        
   }
   
