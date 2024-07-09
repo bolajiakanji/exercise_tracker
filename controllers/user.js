@@ -6,7 +6,7 @@ const createUser = async (username) => {
     });
   
     const savedUser = await user.save();
-    return { _id: savedUser._id, username: savedUser.userName };
+    return  { _id: savedUser._id, username: savedUser.username };
   
 }
 

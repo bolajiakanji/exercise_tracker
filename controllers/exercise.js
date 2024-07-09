@@ -1,8 +1,19 @@
 const User = require("../models/user");
 const Exercise = require("../models/exercise");
 const getdatequery = require('../utils/dateQuery')
+const joi = require('joi')
+
+const schema = {
+  username: joi.string().required(),
+  userId: joi.string().required(),
+  desgription: joi.string().required(),
+  duration: joi.string().required(),
+  date: joi.date().optional(),
+}
+
 
 exports.createExercise = async (newExercise) => {
+  console.log(newExercise)
     let { userId, username, description, duration, date } = newExercise;
     
   

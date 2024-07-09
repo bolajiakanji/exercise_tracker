@@ -14,19 +14,23 @@ mongoose
   .catch((err) => console.error("failed to connect to mangodb", err));
 
 app.use(cors());
-app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(express.static("public"));
+
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/views/index.html");
 });
 
-app.post("/api/users", async(req, res) => {
+app.post("/api/users", async (req, res) => {
+    console.log(req.body.username + 'ury')
+    if (!req.body.username) return res.send('invalid username')
     try {
         const username = req.body.username;
      const result=await   userController
             .createUser(username)
-            
+            console.log(result)
                 return res.json(result);
             
     }
@@ -52,7 +56,7 @@ app.post("/api/users/:_id/exercises", async(req, res) => {
   
     try {
         const result = await exerciseController
-            .createExercise(data)
+            .createExercise(req.body)
     
         return res.json(result);
     }
