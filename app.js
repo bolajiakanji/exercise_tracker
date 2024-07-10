@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 
 const port = process.env.NODE_env || 3000;
 mongoose
-  .connect("mongodb://localhost/metadata")
+  .connect("mongodb+srv://bolajiakanji21:Unde5085%402@bolaji.l6yuhxc.mongodb.net/fcc-exercise-tracker?retryWrites=true&w=majority&appName=Bolaji")
   .then(() => console.log("connected to mangodb"))
   .catch((err) => console.error("failed to connect to mangodb", err));
 
