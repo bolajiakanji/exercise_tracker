@@ -59,7 +59,8 @@ exports.getAllExercises = async (userId, queryParams) => {
     const exercises = await Exercise.find({ buildQuery })
         .limit(parseInt(limit))
     count = exercises.length
-    log = exercises.map(({ description, duration, date }) => {
+  log = exercises.map(({ description, duration, date }) => {
+      console.log(description + 'jmy g')
         return { description, duration, date}
 
     })
