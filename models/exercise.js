@@ -1,25 +1,23 @@
 const mongoose = require("mongoose");
+const {convertDateGiven}= require('../utils/dateConversion')
 
 const exerciseSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
-  username: {
-    type: String,
-    required: true,
-  },
+  
   description: {
     type: String,
     required: true,
   },
-  duration: {
+  duration: {         
     type: Number,
     required: true,
   },
   date: {
-    type: Date,
-    default: new Date(),
+    type: String,
+    
   },
 });
 

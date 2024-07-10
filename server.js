@@ -30,7 +30,7 @@ app.post("/api/users", async (req, res) => {
         const username = req.body.username;
      const result=await   userController
             .createUser(username)
-            console.log(result)
+            
                 return res.json(result);
             
     }
@@ -56,9 +56,10 @@ app.post("/api/users/:_id/exercises", async(req, res) => {
   
     try {
         const result = await exerciseController
-            .createExercise(req.body)
+        .createExercise(req.body, req.params._id)
+      console.log({ Exercises: result })
     
-        return res.json(result);
+      return res.json( result );
     }
     catch(err)  {
       console.log(err);
@@ -70,8 +71,8 @@ app.get("/api/users/:_id/logs",async (req, res) => {
 try {
   const result = await exerciseController
     .getAllExercises(userId, req.query)
-    
-      return res.json(result);
+  console.log({ logs: result })
+      return res.json( result );
     }
     catch (err)  {
       console.log(err)
